@@ -13,7 +13,7 @@ namespace ecs::id {
 	constexpr id_type index_mask{ (id_type{1} << index_bits) - 1 };
 	constexpr id_type id_mask{ std::numeric_limits<id_type>::max() };
 
-	constexpr id_type max_value_generation{ (generation_mask >> index_bits) + 1 };
+	constexpr id_type max_value_generation{ (generation_mask >> index_bits) };
 	constexpr id_type max_value_index{ index_mask };
 
 	using generation_type = std::conditional< (generation_bits > 16), u32, std::conditional< (generation_bits > 8), u16, u8 >::type >::type;
@@ -38,7 +38,7 @@ namespace ecs::id {
 	inline id_type new_generation(id_type id)
 	{
 		const id_type generation{ id::generation(id) + 1};
-		assert(generation < max_value_generation);
+		assert(generation <= max_value_generation);
 		return id::index(id) | (generation << index_bits);
 	}
 

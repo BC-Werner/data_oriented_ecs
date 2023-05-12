@@ -16,14 +16,23 @@ int main()
 	std::cout << "max index value:                      " << ecs::id::max_value_index << std::endl;
 	std::cout << "generation type:                      u" << sizeof(ecs::id::generation_type) * 8 << std::endl;
 
-	ecs::id::id_type entity{ 0 };
+	std::cout << "\ncreating entity..." << std::endl;
+	ecs::id::id_type entity{ std::numeric_limits<ecs::id::id_type>::max() ^ ecs::id::generation_mask };
+	std::cout << "entity id value:                      " << entity << std::endl;
 	std::cout << "entity id bits:                       " << std::bitset<sizeof(ecs::id::id_type) * 8>(entity) << std::endl;
-	entity = ecs::id::new_generation(entity);
-	entity = ecs::id::new_generation(entity);
-	entity = ecs::id::new_generation(entity);
-	std::cout << "new generation entity id bits:        " << std::bitset<sizeof(ecs::id::id_type) * 8>(entity) << std::endl;
+	std::cout << "entity is valid:                      " << (ecs::id::is_valid(entity) ? "true" : "false") << std::endl;
 	std::cout << "entity index:                         " << ecs::id::index(entity) << std::endl;
 	std::cout << "entity generation:                    " << ecs::id::generation(entity) << std::endl;
+
+	std::cout << "\nincrementing entity generation..." << std::endl;
+	for (int i = 0; i < 255; ++i)
+		entity = ecs::id::new_generation(entity);
+
+	std::cout << "new generation entity id value:       " << entity << std::endl;
+	std::cout << "new generation entity id bits:        " << std::bitset<sizeof(ecs::id::id_type) * 8>(entity) << std::endl;
+	std::cout << "new generation entity is valid:       " << (ecs::id::is_valid(entity) ? "true" : "false") << std::endl;
+	std::cout << "new generation entity index:          " << ecs::id::index(entity) << std::endl;
+	std::cout << "new generation entity generation:     " << ecs::id::generation(entity) << std::endl;
 
 	return EXIT_SUCCESS;
 }

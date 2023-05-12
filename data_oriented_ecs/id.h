@@ -38,7 +38,7 @@ namespace ecs::id {
 	inline id_type new_generation(id_type id)
 	{
 		const id_type generation{ id::generation(id) + 1};
-		assert(generation <= max_value_generation);
+		assert(generation < max_value_generation);
 		return id::index(id) | (generation << index_bits);
 	}
 

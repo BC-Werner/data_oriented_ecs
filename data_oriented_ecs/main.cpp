@@ -25,7 +25,7 @@ int main()
 	std::cout << "entity generation:                    " << ecs::id::generation(entity) << std::endl;
 
 	std::cout << "\nincrementing entity generation..." << std::endl;
-	for (int i = 0; i < 255; ++i)
+	for (int i = 0; i < 254; ++i)
 		entity = ecs::id::new_generation(entity);
 
 	std::cout << "new generation entity id value:       " << entity << std::endl;
